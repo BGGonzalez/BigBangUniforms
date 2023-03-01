@@ -11,7 +11,7 @@
     <h1 class="text-center p-2">BigBang Uniforms</h1>
     <!-- Customer Registration Form -->
     <div class="container-fluid row">
-        <form class="col-4 p-3">
+        <form class="col-4 p-3" method="POST">
             <h3 class="text-center text-secondary">Registro de Personas</h3>
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
@@ -29,6 +29,10 @@
                 <label for="phone" class="form-label">Telefono</label>
                 <input type="text" class="form-control" id="phone" name="phone">
             </div>
+            <?php
+            include "model/connect.php";
+            include "controller/client_register.php";
+            ?>
             <button type="submit" class="btn btn-primary" name="register_btn" value="ok">Registrar</button>
         </form>
         <div class="col-8 p-4">
