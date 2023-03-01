@@ -44,17 +44,25 @@
                 </tr>
             </thead>
             <tbody>
+                <?php
+                    include "model/connect.php";
+                    $sql = $connector->query("select * from client_bbu");
+                    while($dbdata = $sql->fetch_object()) {
+                ?>
                 <tr>
-                    <td>DEMO</td>
-                    <td>DEMO</td>
-                    <td>DEMO</td>
-                    <td>DEMO</td>
-                    <td>DEMO</td>
+                    <td><?= $dbdata->id ?></td>
+                    <td><?= $dbdata->name ?></td>
+                    <td><?= $dbdata->last_name ?></td>
+                    <td><?= $dbdata->email ?></td>
+                    <td><?= $dbdata->phone ?></td>
                     <td>
                         <a href="" class="btn btn-small btn-primary"><i class="fa-solid fa-user-pen"></i> Editar</a>
                         <a href="" class="btn btn-small btn-danger"><i class="fa-solid fa-user-minus"></i> Quitar</a>
                     </td>
                 </tr>
+                <?php
+                    }
+                ?>
             </tbody>
         </table>
         </div>
