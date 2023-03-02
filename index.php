@@ -5,6 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interview Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.alert-controller').fadeIn(1000);     
+            setTimeout(function() {
+                $('.alert-controller').fadeOut(1000);           
+            },5000);
+        });
+        $(document).ready(function(){
+            $('.alert-register').fadeIn(1000);     
+            setTimeout(function() {
+                $('.alert-register').fadeOut(1000);           
+            },5000);
+        });
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
@@ -29,46 +44,56 @@
                 <label for="phone" class="form-label">Telefono</label>
                 <input type="text" class="form-control" id="phone" name="phone">
             </div>
-            <?php
-            include "model/connect.php";
-            include "controller/client_register.php";
-            ?>
+            <div class="alert-register">
+                <?php
+                include "model/connect.php";
+                include "controller/client_register.php";
+                ?>
+            </div>
             <button type="submit" class="btn btn-primary" name="register_btn" value="ok">Registrar</button>
         </form>
         <div class="col-8 p-4">
-        <table class="table">
-            <thead class="bg-info">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telefono</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
+            <h3 class="text-center text-secondary">Tabla de Clientes</h3>
+            <div class="alert-controller">
                 <?php
-                    include "model/connect.php";
-                    $sql = $connector->query("select * from client_bbu");
-                    while($dbdata = $sql->fetch_object()) {
+                include "model/connect.php";
+                include "controller/client_delete.php"
                 ?>
-                <tr>
-                    <td><?= $dbdata->id ?></td>
-                    <td><?= $dbdata->name ?></td>
-                    <td><?= $dbdata->last_name ?></td>
-                    <td><?= $dbdata->email ?></td>
-                    <td><?= $dbdata->phone ?></td>
-                    <td>
-                        <a href="" class="btn btn-small btn-primary"><i class="fa-solid fa-user-pen"></i> Editar</a>
-                        <a href="" class="btn btn-small btn-danger"><i class="fa-solid fa-user-minus"></i> Quitar</a>
-                    </td>
-                </tr>
-                <?php
-                    }
-                ?>
-            </tbody>
-        </table>
+            </div>
+            <table class="table">
+                <thead class="bg-info">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $sql = $connector->query("select * from client_bbu");
+                        while($dbdata = $sql->fetch_object()) {
+                    ?>
+                    <tr>
+                        <td><?= $dbdata->id ?></td>
+                        <td><?= $dbdata->name ?></td>
+                        <td><?= $dbdata->last_name ?></td>
+                        <td><?= $dbdata->email ?></td>
+                        <td><?= $dbdata->phone ?></td>
+                        <td>
+                            <a href="view/view_edit.php?id=<?= $dbdata->id ?>"
+                            class="btn btn-small btn-primary"><i class="fa-solid fa-user-pen"></i> Editar</a>
+                            <a href="index.php?id=<?= $dbdata->id ?>" 
+                            class="btn btn-small btn-danger"><i class="fa-solid fa-user-minus"></i> Quitar</a>
+                        </td>
+                    </tr>
+                    <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
