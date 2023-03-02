@@ -13,6 +13,15 @@ $sql=$connector->query(" SELECT * from client_bbu WHERE id=$id");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interview Application</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.alert-edit').fadeIn(1000);     
+            setTimeout(function() {
+                $('.alert-edit').fadeOut(1000);           
+            },5000);
+        });
+    </script>
 </head>
 <body>
     <h1 class="text-center p-2">BigBang Uniforms</h1>
@@ -49,10 +58,12 @@ $sql=$connector->query(" SELECT * from client_bbu WHERE id=$id");
             <?php
             }
             ?>
-            <?php
-            include "../model/connect.php";
-            include "../controller/client_edit.php";
-            ?>
+            <div class="alert-edit">
+                <?php
+                include "../model/connect.php";
+                include "../controller/client_edit.php";
+                ?>
+            </div>
             <button type="submit" class="btn btn-primary" name="edit_btn" value="ok">Modificar</button>
         </form>
         <div class="col-8 p-4">
