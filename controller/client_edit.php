@@ -6,18 +6,16 @@ if(!empty($_POST["edit_btn"])){
        !empty($_POST["email"]) and
        !empty($_POST["phone"])){
 
-        $id=$_GET["id"];
-        $name=$_POST["name"];
-        $lastName=$_POST["last_name"];
-        $email=$_POST["email"];
-        $phone=$_POST["phone"];
+        $client = new Client();
+        $client->setId($_GET["id"]);
+        $client->setName($_POST["name"]);
+        $client->setLastName($_POST["last_name"]);
+        $client->setEmail($_POST["email"]);
+        $client->setPhone($_POST["phone"]);
 
-        $sql=$connector->query(" UPDATE client_bbu set name='$name',last_name='$lastName',email='$email',phone='$phone' WHERE id=$id");
-        if ($sql==1) {
-            header("location:../index.php");
-        } else {
-            echo '<div class="alert alert-danger">ERROR: Cliente no Modificado</div>';
-        }
+        $query = new ClientDao();
+        $result = $query->updateClient($client);
+        echo $result;
 
     }else{
         echo "Faltan Campos por Ingresar <br/><br/>";
