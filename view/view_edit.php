@@ -1,8 +1,7 @@
 <?php
 include "../model/connect.php";
-$id=$_GET["id"];
-$sql=$connector->query(" SELECT * from client_bbu WHERE id=$id");
-
+include "../model/client.php";
+include "../controller/client_dao.php";
 ?>
 
 <!DOCTYPE html>
@@ -34,33 +33,27 @@ $sql=$connector->query(" SELECT * from client_bbu WHERE id=$id");
                 <input type="text" class="form-control" id="id" name="id" disabled value="<?= $_GET["id"] ?>">
             </div>
             <?php
-            
-            while ($dbdata=$sql->fetch_object()) {
-            
+            $client = new ClientDao();
+            $dbdata = $client->selectByIdClient($_GET["id"]);
             ?>
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" value="<?= $dbdata->name ?>">
+                <input type="text" class="form-control" id="name" name="name" value="<?= $dbdata->getName() ?>">
             </div>
             <div class="mb-3">
                 <label for="last_name" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" value="<?= $dbdata->last_name ?>">
+                <input type="text" class="form-control" id="last_name" name="last_name" value="<?= $dbdata->getLastName() ?>">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" name="email" value="<?= $dbdata->email ?>">
+                <input type="text" class="form-control" id="email" name="email" value="<?= $dbdata->getEmail() ?>">
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Telefono</label>
-                <input type="text" class="form-control" id="phone" name="phone" value="<?= $dbdata->phone ?>">
+                <input type="text" class="form-control" id="phone" name="phone" value="<?= $dbdata->getPhone() ?>">
             </div>
-
-            <?php
-            }
-            ?>
             <div class="alert-edit">
                 <?php
-                include "../model/connect.php";
                 include "../controller/client_edit.php";
                 ?>
             </div>
@@ -76,22 +69,20 @@ $sql=$connector->query(" SELECT * from client_bbu WHERE id=$id");
                     <th scope="col">Apellido</th>
                     <th scope="col">Email</th>
                     <th scope="col">Telefono</th>
-                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                    include "../model/connect.php";
-                    $sql = $connector->query("select * from client_bbu");
-                    while($dbdata = $sql->fetch_object()) {
+                    $client = new ClientDao();
+                    $dbdata = $client->selectClient();
+                    foreach($dbdata as $value) {
                 ?>
                 <tr>
-                    <td><?= $dbdata->id ?></td>
-                    <td><?= $dbdata->name ?></td>
-                    <td><?= $dbdata->last_name ?></td>
-                    <td><?= $dbdata->email ?></td>
-                    <td><?= $dbdata->phone ?></td>
-                    <td></td>
+                    <td><?= $value->getId() ?></td>
+                    <td><?= $value->getName() ?></td>
+                    <td><?= $value->getLastName() ?></td>
+                    <td><?= $value->getEmail() ?></td>
+                    <td><?= $value->getPhone() ?></td>
                 </tr>
                 <?php
                     }

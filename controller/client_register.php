@@ -6,17 +6,16 @@ if(!empty($_POST["register_btn"])){
        !empty($_POST["email"]) and
        !empty($_POST["phone"])){
 
-        $name=$_POST["name"];
-        $lastName=$_POST["last_name"];
-        $email=$_POST["email"];
-        $phone=$_POST["phone"];
+        $client = new Client();
+        $client->setId(null);
+        $client->setName($_POST["name"]);
+        $client->setLastName($_POST["last_name"]);
+        $client->setEmail($_POST["email"]);
+        $client->setPhone($_POST["phone"]);
 
-        $sql=$connector->query(" INSERT into client_bbu(name,last_name,email,phone) values('$name','$lastName','$email','$phone') ");
-        if ($sql==1) {
-            echo '<div class="alert alert-success">El Cliente fue Agregado a la Base de Datos</div>';
-        } else {
-            echo '<div class="alert alert-danger">ERROR: Cliente no Agregado</div>';
-        }
+        $query = new ClientDao();
+        $result = $query->insertClient($client);
+        echo $result;
 
     }else{
         echo "Faltan Campos por Ingresar <br/><br/>";

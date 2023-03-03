@@ -23,6 +23,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
+    <?php
+    include "model/client.php";
+    include "model/connect.php";
+    include "controller/client_dao.php";
+    ?>
     <h1 class="text-center p-2">BigBang Uniforms</h1>
     <!-- Customer Registration Form -->
     <div class="container-fluid row">
@@ -46,7 +51,6 @@
             </div>
             <div class="alert-register">
                 <?php
-                include "model/connect.php";
                 include "controller/client_register.php";
                 ?>
             </div>
@@ -56,7 +60,6 @@
             <h3 class="text-center text-secondary">Tabla de Clientes</h3>
             <div class="alert-controller">
                 <?php
-                include "model/connect.php";
                 include "controller/client_delete.php"
                 ?>
             </div>
@@ -73,19 +76,20 @@
                 </thead>
                 <tbody>
                     <?php
-                        $sql = $connector->query("select * from client_bbu");
-                        while($dbdata = $sql->fetch_object()) {
+                        $client = new ClientDao();
+                        $dbdata = $client->selectClient();
+                        foreach($dbdata as $value) {
                     ?>
                     <tr>
-                        <td><?= $dbdata->id ?></td>
-                        <td><?= $dbdata->name ?></td>
-                        <td><?= $dbdata->last_name ?></td>
-                        <td><?= $dbdata->email ?></td>
-                        <td><?= $dbdata->phone ?></td>
+                        <td><?= $value->getId() ?></td>
+                        <td><?= $value->getName() ?></td>
+                        <td><?= $value->getLastName() ?></td>
+                        <td><?= $value->getEmail() ?></td>
+                        <td><?= $value->getPhone() ?></td>
                         <td>
-                            <a href="view/view_edit.php?id=<?= $dbdata->id ?>"
+                            <a href="view/view_edit.php?id=<?= $value->getId() ?>"
                             class="btn btn-small btn-primary"><i class="fa-solid fa-user-pen"></i> Editar</a>
-                            <a href="index.php?id=<?= $dbdata->id ?>" 
+                            <a href="index.php?id=<?= $value->getId() ?>" 
                             class="btn btn-small btn-danger"><i class="fa-solid fa-user-minus"></i> Quitar</a>
                         </td>
                     </tr>
